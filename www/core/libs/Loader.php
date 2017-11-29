@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace core\libs;
 
 class Loader
 {
@@ -13,10 +13,10 @@ class Loader
      */
     protected $prefixToPath = [];
 
-    /**
-     * Регистрируем автозагрузчик
-     * @return void
-     */
+        /**
+         * Регистрируем автозагрузчик
+         * @return void
+         */
     public function register()
     {
         // регистрирует в качестве функции автозагрузчика метод данного класса loadClass

@@ -1,6 +1,6 @@
 <?php
 
-namespace liw\core;
+namespace core\libs;
 
 class ErrorHandler
 {
@@ -86,7 +86,7 @@ class ErrorHandler
      *
      * @param \Exception $e
      */
-    public function exceptionHandler(\Exception $e)
+    public function exceptionHandler(Exception $e)
     {
         // выводим информацию об исключении в браузере
         $this->showError(get_class($e), $e->getMessage(), $e->getFile(), $e->getLine(), 404);
