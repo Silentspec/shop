@@ -11,6 +11,7 @@ class Url
     
     /**
      * Разбиваем урл на сегменты
+     * @return type
      */
     protected static function getSegmentsFromUrl()
     {
@@ -33,10 +34,9 @@ class Url
     /**
      * Возвращаем массив параметров
      */
-    public static function getParam($paramName)
+    public static function getParam($paramName=1)
     {
-        if(isset($_GET[$paramName]))
-        return $_GET[$paramName];
+        return self::getSegment(1+$paramName);
     }
     
     /**
@@ -57,5 +57,49 @@ class Url
     public static function getAllSegments()
     {
         return self::getSegmentsFromUrl();
+    }
+    
+    protected static function checkController($controller)
+    {
+        if(!file_exists($controller.'.php'))
+        {
+            throw new HTTPException ('File '.$controller.'.php Not Found','404');
+        }
+        return $controller;
+    }
+    
+    protected static function checkAction($controller, $action)
+    {
+        if(!method_exists($controller, $action))
+        {
+            throw new HTTPException ('Method '.$action.' Not Found','404');
+        }
+        return $action;
+    }
+    
+    public static function getController($controllerName)
+    {
+        if(!isset($controllerName))
+        {
+            $controller = 'core\controllers\ControllerMain';
+        }
+        else
+        {
+            $controller = 'core\controllers\Controller'.ucfirst($controllerName);
+        }
+        return self::checkController($controller);
+    }
+    
+    public static function getAction($controller,$actionName)
+    {
+        if(is_null($actionName))
+        {
+            $action = 'actionIndex';
+        }
+        else
+        {
+            $action = 'action'.ucfirst($actionName);
+        }
+        return self::checkAction($controller,$action);
     }
 }
